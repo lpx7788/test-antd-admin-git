@@ -189,7 +189,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 #layout {
   .logo-img{
     width: 24px;

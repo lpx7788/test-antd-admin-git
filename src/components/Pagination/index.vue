@@ -44,7 +44,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
   .pagination-content{
     flex: 1;
     text-align: right;

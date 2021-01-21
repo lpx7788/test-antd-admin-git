@@ -63,7 +63,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .c-modal.center {
   ::v-deep .ant-modal-header,
   ::v-deep .ant-modal-footer {

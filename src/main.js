@@ -6,7 +6,7 @@ import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.less';
 import site from '@/config/site'
 import '@/util/globalComponent'
-import '@/style/index.scss'
+import '@/style/index.less'
 
 Vue.use(Antd)
 Vue.prototype.site = site

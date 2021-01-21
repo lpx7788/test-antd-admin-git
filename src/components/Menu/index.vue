@@ -139,7 +139,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .ant-menu-inline-collapsed {
   ::v-deep .title {
     opacity: 0;

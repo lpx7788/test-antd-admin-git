@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
+import router from './router/modules'
 import store from './store'
 import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.less';
 import site from '@/config/site'
 import '@/util/globalComponent'
 import '@/style/index.less'
+import './router/permission'
 
 Vue.use(Antd)
 Vue.prototype.site = site

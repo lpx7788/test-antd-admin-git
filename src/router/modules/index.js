@@ -1,18 +1,17 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Layout from '@/page/Layout'
-import Companys from './modules/company.js'
-import MallSystem from './modules/mallSystem.js'
+import Companys from './company.js'
+import MallSystem from './mallSystem.js'
 
 Vue.use(VueRouter)
 
 
-const routes = [
-  {
-    path: '/login',
-    name: 'login',
-    component: () => import( /* webpackChunkName: "home" */ '../views/login')
-  },{
+const routes = [ {
+  path: '/login',
+  name: 'login',
+  component: () => import( /* webpackChunkName: "home" */ '@/views/login')
+},{
     path: '/',
     name: 'layout',
     redirect: '/home',
@@ -21,7 +20,7 @@ const routes = [
       {
         path: '/home',
         name: 'home',
-        component: () => import( /* webpackChunkName: "home" */ '../views/home')
+        component: () => import( /* webpackChunkName: "home" */ '@/views/home')
       },
       ...Companys, 
       ...MallSystem

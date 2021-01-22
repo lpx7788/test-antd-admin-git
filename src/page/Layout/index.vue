@@ -1,29 +1,52 @@
 <template>
-    <a-layout id="layout">
-        <a-layout-sider width="256" v-model="collapsed" :trigger="null" collapsible>
-            <div class="logo">
-                 <img class="logo-img" src="../../assets/logo.png"  alt="">
-                <span class="title" :class="collapsed?'collapsed':'fadein'">{{site.title}}</span>
-            </div>
-            <Menu :data="menuData" />
-        </a-layout-sider>
-        <a-layout>
-            <a-layout-header style="background: #fff; padding: 0">
-                <a-icon class="trigger" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="() => (collapsed = !collapsed)" />
-            </a-layout-header>
-            <a-layout-content :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }">
-                <router-view></router-view>
-            </a-layout-content>
-        </a-layout>
+  <a-layout id="layout">
+    <a-layout-sider width="256" v-model="collapsed" :trigger="null" collapsible>
+      <div class="logo">
+        <img class="logo-img" src="../../assets/logo.png" alt="" />
+        <span class="title" :class="collapsed ? 'collapsed' : 'fadein'">{{
+          site.title
+        }}</span>
+      </div>
+      <Menu :data="menuData" />
+    </a-layout-sider>
+    <a-layout>
+      <a-layout-header style="background: #fff; padding: 0;box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);z-index: 9">
+        <div class="header-wrap flex-between">
+          <a-icon
+            class="header-item trigger tal"
+            :type="collapsed ? 'menu-unfold' : 'menu-fold'"
+            @click="() => (collapsed = !collapsed)"
+          />
+          <header-avatar class="header-item header-avatar tar" />
+        </div>
+      </a-layout-header>
+       <Breadcrumb></Breadcrumb>
+
+      <a-layout-content
+        :style="{
+          margin: '24px 16px',
+          padding: '24px',
+          background: '#fff',
+          minHeight: '280px',
+        }"
+      >
+       
+        <router-view></router-view>
+      </a-layout-content>
     </a-layout>
+  </a-layout>
 </template>
 
 <script>
 import Menu from "@/components/Menu";
+import HeaderAvatar from "./Header/HeaderAvatar";
+import Breadcrumb from "./Breadcrumb";
 
 export default {
   components: {
-    Menu
+    Menu,
+    HeaderAvatar,
+    Breadcrumb
   },
   data() {
     return {
@@ -34,9 +57,9 @@ export default {
           path: "home",
           name: "home",
           meta: {
-            title: "主页",
-            icon: "home"
-          }
+            title: "首页平台",
+            icon: "home",
+          },
         },
         {
           id: 2,
@@ -44,7 +67,7 @@ export default {
           name: "company",
           meta: {
             title: "企业管理",
-            icon: "build"
+            icon: "build",
           },
           children: [
             {
@@ -53,9 +76,9 @@ export default {
               name: "companys",
               meta: {
                 title: "企业列表",
-                icon: "bank"
+                icon: "bank",
               },
-              parentId: 2
+              parentId: 2,
             },
             {
               id: 22,
@@ -63,11 +86,11 @@ export default {
               name: "users",
               meta: {
                 title: "用户列表",
-                icon: "team"
+                icon: "team",
               },
-              parentId: 2
-            }
-          ]
+              parentId: 2,
+            },
+          ],
         },
         // {
         //   id: 3,
@@ -143,7 +166,7 @@ export default {
           name: "mallSystem",
           meta: {
             title: "商城系统管理",
-            icon: "shop"
+            icon: "shop",
           },
           children: [
             {
@@ -152,9 +175,9 @@ export default {
               name: "role",
               meta: {
                 title: "商城角色管理",
-                icon: "team"
+                icon: "team",
               },
-              parentId: 7
+              parentId: 7,
             },
             {
               id: 72,
@@ -162,9 +185,9 @@ export default {
               name: "defaultPermission",
               meta: {
                 title: "商城默认权限",
-                icon: "cluster"
+                icon: "cluster",
               },
-              parentId: 7
+              parentId: 7,
             },
             {
               id: 73,
@@ -172,26 +195,26 @@ export default {
               name: "permissionResource",
               meta: {
                 title: "商城权限资源",
-                icon: "apartment"
+                icon: "apartment",
               },
-              parentId: 7
+              parentId: 7,
             },
-          ]
-        }
-      ]
+          ],
+        },
+      ],
     };
   },
   methods: {
     menuClick({ item, key, keyPath }) {
       this.$router.push({ name: key });
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="less" scoped>
 #layout {
-  .logo-img{
+  .logo-img {
     width: 24px;
     height: 24px;
   }
@@ -199,7 +222,7 @@ export default {
   .trigger {
     font-size: 18px;
     line-height: 64px;
-    padding: 0 24px;
+    // padding: 0 24px;
     cursor: pointer;
     transition: color 0.3s;
   }
@@ -209,17 +232,24 @@ export default {
     margin: 16px 24px;
     font-size: 32px;
     color: #fff;
-    .icon{
+    .icon {
       color: #4d65fd;
       transform: rotateY(-180deg) rotate(55deg);
     }
-    .title{
+    .title {
       margin-left: 10px;
       font-size: 18px;
     }
-    span.collapsed{
+    span.collapsed {
       opacity: 0;
     }
+  }
+  .header-wrap {
+    padding: 0 24px;
+  }
+    ::v-deep.ant-layout-sider{
+     box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
+     z-index: 10;
   }
 }
 </style>

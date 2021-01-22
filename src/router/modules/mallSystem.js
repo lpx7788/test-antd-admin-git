@@ -6,7 +6,7 @@ export default [{
         title: "商城系统管理",
         icon: ""
     },
-    component: () => import( '../../page/RouteView/index.vue'),
+    component: () => import( '@/page/RouteView/index.vue'),
     children: [{
             id: 71,
             path: "role",
@@ -15,7 +15,7 @@ export default [{
                 title: "商城角色管理",
                 icon: ""
             },
-            component: () => import( '../../views/mallSystem/role.vue'),
+            component: () => import( '@/views/mallSystem/role.vue'),
         },
         {
             id: 72,
@@ -25,7 +25,7 @@ export default [{
                 title: "商城默认权限",
                 icon: ""
             },
-            component: () => import( '../../views/mallSystem/defaultPermission.vue'),
+            component: () => import( '@/views/mallSystem/defaultPermission.vue'),
         },
         {
             id: 73,
@@ -35,7 +35,7 @@ export default [{
                 title: "商城权限资源",
                 icon: ""
             },
-            component: () => import( '../../views/mallSystem/permissionResource.vue'),
+            component: () => import( '@/views/mallSystem/permissionResource.vue'),
         },
     ]
 }]

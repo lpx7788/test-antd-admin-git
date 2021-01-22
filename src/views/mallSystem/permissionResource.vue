@@ -10,7 +10,6 @@
           :loading="loading"
           rowSelection
           search
-          
         >
           <template slot="header-l-btn">
             <a-button icon="delete" v-if="selectedRowKeys.length > 0" type="danger" @click="handleDeleteAll"> 批量操作 </a-button>
@@ -312,7 +311,7 @@ export default {
       this.handleDel([...new Set(this.deleteIdArr)])
     },
     handleAddChildMenu () {
-      console.log('新增子菜单')
+      // console.log('新增子菜单')
     }
   }
 }

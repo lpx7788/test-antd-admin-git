@@ -1,5 +1,4 @@
 <template>
-
  <div class="c-pagination flex-center" v-if="datas.total>=datas.pageSize" >
   <div class="pagination-content">
     <a-pagination
@@ -49,7 +48,6 @@ export default {
     flex: 1;
     text-align: right;
     margin: 25px 0 20px 20px;
-   
   }
   
 </style>

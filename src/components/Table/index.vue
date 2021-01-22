@@ -111,7 +111,7 @@ export default {
   created () {
   },
   mounted () {
-    console.log('paginationDatas',this.paginationDatas)
+    // console.log('paginationDatas',this.paginationDatas)
   },
   methods: {
     onReload(){},
@@ -133,3 +133,5 @@ export default {
   }
 }
 </script>
+<style lang="less" scoped>
+</style>

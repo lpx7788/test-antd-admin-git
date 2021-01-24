@@ -66,6 +66,10 @@
 
 <script>
 import { mapState } from "vuex";
+// import { login,getMenu } from '@/api/login/index'
+import {mapActions} from 'vuex'
+import router from '@/router/index'
+
 export default {
   name: "Workplace",
   components: {},
@@ -76,9 +80,12 @@ export default {
     };
   },
   computed: {},
-  created() {},
+  created() {
+  },
   mounted() {},
   methods: {
+    ...mapActions(['Login']),
+    //  ...mapMutations('account', ['setUser']),
     onSubmit (e) {
       e.preventDefault()
       this.form.validateFields((err) => {
@@ -96,35 +103,40 @@ export default {
               return;
           }
           this.loading = true
-          // console.log(phone,password)
-          this.afterLogin('res')
-          // login(name, password).then(this.afterLogin)
+          // Login().then(this.afterLogin)
+            this.Login({phone, password})
+            .then((res) => this.loginSuccess(res))
+            .catch(err => this.requestFailed(err))
+            .finally(() => {
+              // state.loginBtn = false
+            })
         }
       })
     },
-     afterLogin(res) {
-      this.logging = false
+    loginSuccess(res){
+      this.$message.success('登录成功')
+      this.$router.push({ path: '/' })
+      //  this.isLoginError = false
+    },
+    requestFailed (err) {},
+    //  afterLogin(res) {
+      // this.logging = false
       // const loginRes = res.data
-      // if (loginRes.code >= 0) {
-        // const {user, permissions, roles} = loginRes.data
-        // this.setUser(user)
-        // this.setPermissions(permissions)
-        // this.setRoles(roles)
-        // setAuthorization({token: loginRes.data.token, expireAt: new Date(loginRes.data.expireAt)})
-        // // 获取路由配置
-        // getRoutesConfig().then(result => {
-        //   const routesConfig = result.data.data
-        //   console.log('routesConfig===',routesConfig)
-        //   loadRoutes(routesConfig)
-          localStorage.setItem('access_token','e9b68b96ef3648adb99c1a8a9a3b12c3_d8ccfdda064544e4888249dbed628bc1')
-          this.$router.push('/home')
-          // locationStorage.setItem
-        //   this.$message.success(loginRes.message, 3)
-        // })
-      // } else {
-        // this.error = loginRes.message
-      // }
-    }
+      // const {user, permissions, roles} = loginRes
+      // this.setUser(user)
+      // localStorage.setItem('omp-token',loginRes.token)
+      // // this.setPermissions(permissions)
+      // // this.setRoles(roles)
+      // // setRoutes
+      // // // 获取路由配置
+      // getMenu().then(result => {
+      //   const routesConfig = result.data
+      //   // console.log('routesConfig===',routesConfig)
+      //   // router.addRoutes(routesConfig)
+      //   this.$router.push('/home')
+      //   this.$message.success('登录成功')
+      // })
+    // }
   },
 };
 </script>

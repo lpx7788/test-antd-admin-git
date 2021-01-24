@@ -1,55 +1,130 @@
-import $bus from '@/main'
+// export default {
+//   namespaced: true,
+//   state: {
+//     user: undefined,
+//   },
+//   getters: {
+//     user: state => {
+//       if (!state.user) {
+//         try {
+//           const user = localStorage.getItem('omp-userInfo')
+//           state.user = JSON.parse(user)
+//         } catch (e) {
+//           console.error(e)
+//         }
+//       }
+//       return state.user
+//     }
+//   },
+//   mutations: {
+//     setUser (state, user) {
+//       localStorage.setItem('omp-userInfo', JSON.stringify(user))
+//     }
+//   }
+// }
 
-export default {
-  state:{
-    userInfo: {
-      userName: null,
-      userId: null,
-      companyName: null,
-      companyId: null
-    },
+
+// import storage from 'store'
+import { login, getInfo } from '@/api/login'
+// import { ACCESS_TOKEN } from '@/store/mutation-types'
+// import { welcome } from '@/utils/util'
+
+const user = {
+  state: {
+    token: '',
+    name: '',
+    // welcome: '',
+    avatar: '',
+    roles: [],
+    info: {}
   },
-  getters: {
-    getUserInfo(state){
-      return state.userInfo
+
+  mutations: {
+    SET_TOKEN: (state, token) => {
+      state.token = token
+    },
+    SET_NAME: (state, { name }) => {
+      state.name = name
+    },
+    SET_AVATAR: (state, avatar) => {
+      state.avatar = avatar
+    },
+    SET_ROLES: (state, roles) => {
+      state.roles = roles
+    },
+    SET_INFO: (state, info) => {
+      state.info = info
     }
   },
-  mutations:{
-    updateUserInfo(state, userInfo){
-      state.userInfo = userInfo
-    },
-    updateUserId(state, id){
-      state.userInfo.userId = id
-      state.userInfo.userName = id=='1'?'Tom':id=='2'?'Jack':id=='3'?'Mike':''
-      sessionStorage.setItem('userId',id)
-    }
-  },
-  actions:{
-    login({commit, state}, params){
-      return new Promise((resolve, reject)=>{
-        $bus.http
-        .get($bus.apis.getcompanysbyuserid, {
-          userId: params
-        })
-        .then(res => {
-          let userInfo = {
-            userId: params,
-            userName: params=='1'?'Tom':params=='2'?'Jack':params=='3'?'Mike':''
-          }
-          res.data.forEach(i => {
-            if(i.selected) {
-              userInfo.companyName = i.companyName
-              userInfo.companyId = i.id
-            }
-          })
-          commit('updateUserInfo', userInfo)
-          sessionStorage.setItem('userInfo', JSON.stringify(userInfo))
-          resolve(res)
-        }).catch(err=>{
-          reject(err)
+
+  actions: {
+    // 登录
+    Login ({ commit }, Parmas) {
+      return new Promise((resolve, reject) => {
+        login(Parmas).then(response => {
+          const result = response.data
+          console.log('登录==',result)
+          localStorage.setItem('omp-token',result.token)
+          // storage.set(ACCESS_TOKEN, result.token, 7 * 24 * 60 * 60 * 1000)
+          commit('SET_TOKEN', result.token)
+          resolve()
+        }).catch(error => {
+          reject(error)
         })
       })
     },
 
+    // 获取用户信息
+    GetInfo ({ commit }) {
+      return new Promise((resolve, reject) => {
+        getInfo().then(response => {
+         
+          const result = response.data
+
+          if (result.role && result.role.permissions.length > 0) {
+            const role = result.role
+            role.permissions = result.role.permissions
+            role.permissions.map(per => {
+              if (per.actionEntitySet != null && per.actionEntitySet.length > 0) {
+                const action = per.actionEntitySet.map(action => { return action.action })
+                per.actionList = action
+              }
+            })
+            role.permissionList = role.permissions.map(permission => { return permission.permissionId })
+            commit('SET_ROLES', result.role)
+            commit('SET_INFO', result)
+            console.log('SET_ROLES',result.role)
+            console.log('SET_INFO',result)
+          } else {
+            reject(new Error('getInfo: roles must be a non-null array !'))
+          }
+
+          commit('SET_NAME', { name: result.name })
+          commit('SET_AVATAR', result.avatar)
+
+          resolve(response)
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+
+    // 登出
+    // Logout ({ commit, state }) {
+    //   return new Promise((resolve) => {
+    //     logout(state.token).then(() => {
+    //       commit('SET_TOKEN', '')
+    //       commit('SET_ROLES', [])
+    //       storage.remove(ACCESS_TOKEN)
+    //       resolve()
+    //     }).catch(() => {
+    //       resolve()
+    //     }).finally(() => {
+    //     })
+    //   })
+    // }
+
   }
 }
+
+export default user

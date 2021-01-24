@@ -30,7 +30,7 @@ export default {
   methods: {
     logout() {
       // logout()
-       localStorage.setItem('access_token','')
+       localStorage.setItem('omp-token','')
       this.$router.push('/login')
     }
   }

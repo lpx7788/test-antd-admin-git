@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import Menu from "@/components/Menu";
 import HeaderAvatar from "./Header/HeaderAvatar";
 import Breadcrumb from "./Breadcrumb";
@@ -202,7 +203,17 @@ export default {
           ],
         },
       ],
+      // menuData:[]
     };
+  },
+  //     computed: {
+  //   ...mapState({
+  //     // 动态主路由
+  //     menuData: state => state.menu.addRouters,
+  //   })
+  // },
+  created(){
+    console.log('menuData===layput',this.menuData)
   },
   methods: {
     menuClick({ item, key, keyPath }) {

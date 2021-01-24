@@ -104,6 +104,7 @@ export default {
       }
     },
     menuItemClick(e) {
+      console.log(' e.key ==', e.key )
       this.$router.push({ name: e.key });
     },
     // 查找初始选中的菜单项
@@ -128,8 +129,11 @@ export default {
       }
       findChildName(JSON.parse(JSON.stringify(list)))
       let child = arr.find(i => {return i.name === name})
+      console.log('child',child);
+      if(child){
       let parId = getParent(list,child.id)
       this.openKeys = [parId[0].name]
+      }
     }
   },
   created() {

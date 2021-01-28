@@ -1,5 +1,5 @@
 import { asyncRouterMap, constantRouterMap } from '@/config/router.config'
-
+import { getMenu} from '@/api/login'
 
 
 /**
@@ -40,12 +40,10 @@ function hasRole(roles, route) {
 }
 
 function filterAsyncRouter (routerMap, roles) {
-  console.log('处理--',routerMap, roles)
   const accessedRouters = routerMap.filter(route => {
     if (hasPermission(roles.permissionList, route)) {
       if (route.children && route.children.length) {
         route.children = filterAsyncRouter(route.children, roles)
-        console.log('ici=on',route)
       }
       return true
     }
@@ -62,21 +60,26 @@ const menu = {
   mutations: {
     SET_ROUTERS: (state, routers) => {
       state.addRouters = routers
-      console.log('routers',routers)
       state.routers = constantRouterMap.concat(routers)
-      console.log('concat==', state.routers);
     }
   },
   actions: {
     GenerateRoutes ({ commit }, data) {
       return new Promise(resolve => {
-        const { roles } = data
-        const accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
+        // const { roles } = data
+        // console.log()
+        // const accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
         // console.log('roles',roles)
         // console.log('constantRouterMap',constantRouterMap)
         // console.log('asyncRouterMap0000',asyncRouterMap)
         // console.log('accessedRouters',accessedRouters)
-        commit('SET_ROUTERS', roles)
+        // commit('SET_ROUTERS', accessedRouters)
+        const { token } = data
+        getMenu(token).then(routers => {
+          console.log('动态获取的==routers',routers.data)
+          commit('SET_ROUTERS', routers.data)
+          resolve()
+        })
         resolve()
       })
     }

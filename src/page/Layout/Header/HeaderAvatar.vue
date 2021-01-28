@@ -10,7 +10,7 @@
         <span>个人中心</span>
       </a-menu-item>
       <a-menu-divider />
-      <a-menu-item @click="logout">
+      <a-menu-item @click="handleLogout">
         <a-icon style="margin-right: 8px;" type="poweroff" />
         <span>退出登录</span>
       </a-menu-item>
@@ -19,19 +19,18 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
-// import {logout} from '@/services/user'
-
+import {mapActions} from 'vuex'
 export default {
   name: 'HeaderAvatar',
   computed: {
-    // ...mapGetters('account', ['user']),
+    
   },
   methods: {
-    logout() {
-      // logout()
-       localStorage.setItem('omp-token','')
-      this.$router.push('/login')
+     ...mapActions(['Logout']),
+    handleLogout() {
+      this.Logout().then((res)=>{
+           this.$router.push('/login')
+      })
     }
   }
 }

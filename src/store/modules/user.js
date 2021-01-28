@@ -25,7 +25,7 @@
 
 
 // import storage from 'store'
-import { login, getInfo } from '@/api/login'
+import { login, getInfo ,logout} from '@/api/login'
 // import { ACCESS_TOKEN } from '@/store/mutation-types'
 // import { welcome } from '@/utils/util'
 
@@ -63,9 +63,7 @@ const user = {
       return new Promise((resolve, reject) => {
         login(Parmas).then(response => {
           const result = response.data
-          console.log('登录==',result)
           localStorage.setItem('omp-token',result.token)
-          // storage.set(ACCESS_TOKEN, result.token, 7 * 24 * 60 * 60 * 1000)
           commit('SET_TOKEN', result.token)
           resolve()
         }).catch(error => {
@@ -78,9 +76,7 @@ const user = {
     GetInfo ({ commit }) {
       return new Promise((resolve, reject) => {
         getInfo().then(response => {
-         
           const result = response.data
-
           if (result.role && result.role.permissions.length > 0) {
             const role = result.role
             role.permissions = result.role.permissions
@@ -93,8 +89,6 @@ const user = {
             role.permissionList = role.permissions.map(permission => { return permission.permissionId })
             commit('SET_ROLES', result.role)
             commit('SET_INFO', result)
-            console.log('SET_ROLES',result.role)
-            console.log('SET_INFO',result)
           } else {
             reject(new Error('getInfo: roles must be a non-null array !'))
           }
@@ -110,19 +104,21 @@ const user = {
     },
 
     // 登出
-    // Logout ({ commit, state }) {
-    //   return new Promise((resolve) => {
-    //     logout(state.token).then(() => {
-    //       commit('SET_TOKEN', '')
-    //       commit('SET_ROLES', [])
-    //       storage.remove(ACCESS_TOKEN)
-    //       resolve()
-    //     }).catch(() => {
-    //       resolve()
-    //     }).finally(() => {
-    //     })
-    //   })
-    // }
+    Logout ({ commit, state }) {
+      console.log('loginout===')
+      return new Promise((resolve) => {
+        logout(state.token).then(() => {
+          console.log(656466)
+          commit('SET_TOKEN', '')
+          commit('SET_ROLES', [])
+          localStorage.setItem('omp-token','')
+          resolve()
+        }).catch(() => {
+          resolve()
+        }).finally(() => {
+        })
+      })
+    }
 
   }
 }

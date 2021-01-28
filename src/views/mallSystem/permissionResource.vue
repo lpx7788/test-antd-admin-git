@@ -307,7 +307,6 @@ export default {
     handleDeleteAll () {
       this.deleteIdArr = []
       this.selectedRows.map((item) => { return this.deleteIdArr.push(item.key) })
-      // console.log(this.deleteIdArr)
       this.handleDel([...new Set(this.deleteIdArr)])
     },
     handleAddChildMenu () {

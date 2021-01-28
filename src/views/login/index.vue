@@ -65,11 +65,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-// import { login,getMenu } from '@/api/login/index'
 import {mapActions} from 'vuex'
-import router from '@/router/index'
-
 export default {
   name: "Workplace",
   components: {},
@@ -85,7 +81,6 @@ export default {
   mounted() {},
   methods: {
     ...mapActions(['Login']),
-    //  ...mapMutations('account', ['setUser']),
     onSubmit (e) {
       e.preventDefault()
       this.form.validateFields((err) => {
@@ -103,7 +98,6 @@ export default {
               return;
           }
           this.loading = true
-          // Login().then(this.afterLogin)
             this.Login({phone, password})
             .then((res) => this.loginSuccess(res))
             .catch(err => this.requestFailed(err))
@@ -119,24 +113,6 @@ export default {
       //  this.isLoginError = false
     },
     requestFailed (err) {},
-    //  afterLogin(res) {
-      // this.logging = false
-      // const loginRes = res.data
-      // const {user, permissions, roles} = loginRes
-      // this.setUser(user)
-      // localStorage.setItem('omp-token',loginRes.token)
-      // // this.setPermissions(permissions)
-      // // this.setRoles(roles)
-      // // setRoutes
-      // // // 获取路由配置
-      // getMenu().then(result => {
-      //   const routesConfig = result.data
-      //   // console.log('routesConfig===',routesConfig)
-      //   // router.addRoutes(routesConfig)
-      //   this.$router.push('/home')
-      //   this.$message.success('登录成功')
-      // })
-    // }
   },
 };
 </script>

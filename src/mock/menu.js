@@ -53,7 +53,7 @@ export default ({
               path: "permissionResource",
               name: "permissionResource",
               meta: {
-                title: "商城权限资源99",
+                title: "商城权限资源",
                 icon: "apartment",
               },
               parentId: 7,

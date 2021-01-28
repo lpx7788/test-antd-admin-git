@@ -12,9 +12,15 @@ export const getInfo = (option) =>
         data: option,
         method: 'get'
     })
-// export const getMenu = (option) =>
-//     request({
-//         url: 'http://user/menu.cn',
-//         data: option,
-//         method: 'post'
-//     })
+export const logout = (option) =>
+    request({
+        url: 'http://user/logout.cn',
+        data: option,
+        method: 'post'
+    })
+export const getMenu = (option) =>
+    request({
+        url: 'http://user/menu.cn',
+        data: option,
+        method: 'post'
+    })

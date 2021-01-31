@@ -2,6 +2,7 @@ import { json } from "body-parser";
 
 // 查找父级
 export function getParent(list, childId) {
+ 
     var arrRes = [];
     if (list.length == 0) {
         if (childId) {
@@ -13,6 +14,7 @@ export function getParent(list, childId) {
         for (var i = 0, length = data.length; i < length; i++) {
             let node = data[i];
             if (node.id == nodeId) {
+  
                 arrRes.unshift(node);
                 rev(list, node.parentId);
                 break;
@@ -25,6 +27,7 @@ export function getParent(list, childId) {
         return arrRes;
     };
     arrRes = rev(list, childId);
+ 
     return arrRes;
 }
 

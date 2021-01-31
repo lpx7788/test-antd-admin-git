@@ -4,7 +4,6 @@ import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import store from '../store'
 const whiteList = ['/login'];//白名单
-
 router.beforeEach((to, from, next) => {
     NProgress.start();
     let token = localStorage.getItem('omp-token')
@@ -20,7 +19,7 @@ router.beforeEach((to, from, next) => {
                     .then(response => {
                         let res = response.data
                         const roles = res && res.role
-                        store.dispatch('GenerateRoutes', { roles }).then(() => {
+                        store.dispatch('GenerateRoutes', { roles }).then((res) => {
                             router.addRoutes(store.getters.addRouters)
                             const redirect = decodeURIComponent(from.query.redirect || to.path)
                             if (to.path === redirect) {

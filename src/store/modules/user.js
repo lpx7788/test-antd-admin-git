@@ -1,33 +1,5 @@
-// export default {
-//   namespaced: true,
-//   state: {
-//     user: undefined,
-//   },
-//   getters: {
-//     user: state => {
-//       if (!state.user) {
-//         try {
-//           const user = localStorage.getItem('omp-userInfo')
-//           state.user = JSON.parse(user)
-//         } catch (e) {
-//           console.error(e)
-//         }
-//       }
-//       return state.user
-//     }
-//   },
-//   mutations: {
-//     setUser (state, user) {
-//       localStorage.setItem('omp-userInfo', JSON.stringify(user))
-//     }
-//   }
-// }
 
-
-// import storage from 'store'
 import { login, getInfo ,logout} from '@/api/login'
-// import { ACCESS_TOKEN } from '@/store/mutation-types'
-// import { welcome } from '@/utils/util'
 
 const user = {
   state: {
@@ -105,10 +77,8 @@ const user = {
 
     // 登出
     Logout ({ commit, state }) {
-      console.log('loginout===')
       return new Promise((resolve) => {
         logout(state.token).then(() => {
-          console.log(656466)
           commit('SET_TOKEN', '')
           commit('SET_ROLES', [])
           localStorage.setItem('omp-token','')

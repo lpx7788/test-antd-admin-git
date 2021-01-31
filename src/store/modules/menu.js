@@ -1,6 +1,6 @@
 import { asyncRouterMap, constantRouterMap } from '@/config/router.config'
 import { getMenu} from '@/api/login'
-
+import { generatorDynamicRouter } from '@/router/generator-routers'
 
 /**
  * 过滤账户是否拥有某一个权限，并将菜单从加载列表移除
@@ -66,21 +66,11 @@ const menu = {
   actions: {
     GenerateRoutes ({ commit }, data) {
       return new Promise(resolve => {
-        // const { roles } = data
-        // console.log()
-        // const accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
-        // console.log('roles',roles)
-        // console.log('constantRouterMap',constantRouterMap)
-        // console.log('asyncRouterMap0000',asyncRouterMap)
-        // console.log('accessedRouters',accessedRouters)
-        // commit('SET_ROUTERS', accessedRouters)
         const { token } = data
-        getMenu(token).then(routers => {
-          console.log('动态获取的==routers',routers.data)
-          commit('SET_ROUTERS', routers.data)
+        generatorDynamicRouter(token).then(routers => {
+          commit('SET_ROUTERS', routers)
           resolve()
         })
-        resolve()
       })
     }
   }

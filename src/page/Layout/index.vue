@@ -52,168 +52,18 @@ export default {
   data() {
     return {
       collapsed: false,
-      // menuData: [
-      //   {
-      //     id: 1,
-      //     path: "home",
-      //     name: "home",
-      //     meta: {
-      //       title: "首页平台",
-      //       icon: "home",
-      //     },
-      //   },
-      //   {
-      //     id: 2,
-      //     path: "",
-      //     name: "company",
-      //     meta: {
-      //       title: "企业管理",
-      //       icon: "build",
-      //     },
-      //     children: [
-      //       {
-      //         id: 21,
-      //         path: "companys",
-      //         name: "companys",
-      //         meta: {
-      //           title: "企业列表",
-      //           icon: "bank",
-      //         },
-      //         parentId: 2,
-      //       },
-      //       {
-      //         id: 22,
-      //         path: "users",
-      //         name: "users",
-      //         meta: {
-      //           title: "用户列表",
-      //           icon: "team",
-      //         },
-      //         parentId: 2,
-      //       },
-      //     ],
-      //   },
-      //   // {
-      //   //   id: 3,
-      //   //   path: "order",
-      //   //   name: "order",
-      //   //   meta: {
-      //   //     title: "订单管理",
-      //   //     icon: "pay-circle"
-      //   //   }
-      //   // },
-      //   // {
-      //   //   id: 4,
-      //   //   path: "release",
-      //   //   name: "release",
-      //   //   meta: {
-      //   //     title: "发布管理",
-      //   //     icon: "money-collect"
-      //   //   }
-      //   // },
-      //   // {
-      //   //   id: 5,
-      //   //   path: "info",
-      //   //   name: "info",
-      //   //   meta: {
-      //   //     title: "资讯管理",
-      //   //     icon: "profile"
-      //   //   },
-      //   //   children: [
-      //   //     {
-      //   //       id: 51,
-      //   //       path: "allInfo",
-      //   //       name: "allInfo",
-      //   //       meta: {
-      //   //         title: "全部资讯",
-      //   //         icon: "project"
-      //   //       },
-      //   //       parentId: 5
-      //   //     },
-      //   //     {
-      //   //       id: 52,
-      //   //       path: "myInfo",
-      //   //       name: "myInfo",
-      //   //       meta: {
-      //   //         title: "我的资讯",
-      //   //         icon: "menu"
-      //   //       },
-      //   //       parentId: 5
-      //   //     },
-      //   //     {
-      //   //       id: 53,
-      //   //       path: "releaseInfo",
-      //   //       name: "releaseInfo",
-      //   //       meta: {
-      //   //         title: "发布资讯",
-      //   //         icon: "read"
-      //   //       },
-      //   //       parentId: 5
-      //   //     }
-      //   //   ]
-      //   // },
-      //   // {
-      //   //   id: 6,
-      //   //   path: "system",
-      //   //   name: "system",
-      //   //   meta: {
-      //   //     title: "系统管理",
-      //   //     icon: ""
-      //   //   }
-      //   // },
-      //   {
-      //     id: 7,
-      //     path: "mallSystem",
-      //     name: "mallSystem",
-      //     meta: {
-      //       title: "商城系统管理",
-      //       icon: "shop",
-      //     },
-      //     children: [
-      //       {
-      //         id: 71,
-      //         path: "role",
-      //         name: "role",
-      //         meta: {
-      //           title: "商城角色管理",
-      //           icon: "team",
-      //         },
-      //         parentId: 7,
-      //       },
-      //       {
-      //         id: 72,
-      //         path: "defaultPermission",
-      //         name: "defaultPermission",
-      //         meta: {
-      //           title: "商城默认权限",
-      //           icon: "cluster",
-      //         },
-      //         parentId: 7,
-      //       },
-      //       {
-      //         id: 73,
-      //         path: "permissionResource",
-      //         name: "permissionResource",
-      //         meta: {
-      //           title: "商城权限资源",
-      //           icon: "apartment",
-      //         },
-      //         parentId: 7,
-      //       },
-      //     ],
-      //   },
-      // ],
-      // menuData:[]
+  
     };
   },
   computed: {
     ...mapState({
       // 动态主路由
-      menuData: state => state.menu.addRouters,
+      menuData: state => state.menu.addRouters[0].children,
     })
   },
   created(){
-    // console.log('menuData===layput',this.menuData)
+    // this.menuData = this.menuData[0].children
+    console.log('menuData===layput',this.menuData)
   },
   methods: {
     menuClick({ item, key, keyPath }) {

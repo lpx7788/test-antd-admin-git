@@ -1,17 +1,30 @@
 <template>
-    <div class="c-menu">
-        <a-menu :default-selected-keys="selectedKeys" :default-open-keys="openKeys" mode="inline" theme="dark" @click="menuItemClick">
-            <template v-for="item in data">
-                <template v-if="!item.hidden">
-                    <sub-menu v-if="item.children && showChildMenu(item.children)" :key="item.name" :menu-info="item" :showChildMenu="showChildMenu" :collapsed="collapsed" />
-                    <a-menu-item v-else :key="item.name">
-                        <a-icon :type="item.meta.icon" />
-                        <span class="title">{{ item.meta.title }}</span>
-                    </a-menu-item>
-                </template>
-            </template>
-        </a-menu>
-    </div>
+  <div class="c-menu">
+    <a-menu
+      :default-selected-keys="selectedKeys"
+      :default-open-keys="openKeys"
+      mode="inline"
+      theme="dark"
+      @click="menuItemClick"
+      @openChange="onOpenChange"
+    >
+      <template v-for="item in data">
+        <template v-if="!item.hidden">
+          <sub-menu
+            v-if="item.children && showChildMenu(item.children)"
+            :key="item.name"
+            :menu-info="item"
+            :showChildMenu="showChildMenu"
+            :collapsed="collapsed"
+          />
+          <a-menu-item v-else :key="item.name">
+            <a-icon :type="item.meta.icon" />
+            <span class="title">{{ item.meta.title }}</span>
+          </a-menu-item>
+        </template>
+      </template>
+    </a-menu>
+  </div>
 </template>
 
 <script>
@@ -43,20 +56,20 @@ const SubMenu = {
     // 要渲染的菜单信息
     menuInfo: {
       type: Object,
-      default: () => ({})
+      default: () => ({}),
     },
     // 是否展示子菜单
     showChildMenu: {
       type: Function,
-      default: () => {}
-    }
-  }
+      default: () => {},
+    },
+  },
 };
 
 export default {
   name: "subMenu",
   components: {
-    "sub-menu": SubMenu
+    "sub-menu": SubMenu,
   },
   props: {
     // 渲染菜单的数据
@@ -64,13 +77,13 @@ export default {
       type: Array,
       default: () => {
         return [];
-      }
+      },
     },
     // 是否缩起菜单
     collapsed: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
@@ -84,19 +97,23 @@ export default {
       this.getDefaultkey(this.data);
     },
     collapsed(newVal) {
+      console.log(newVal);
       // 解决展开菜单时对应的子菜单没有展开
       if (!newVal) {
         this.getDefaultOpenkeys(this.$route.name);
       }
-    }
+    },
   },
   methods: {
+    onOpenChange(openKeys) {
+      console.log(openKeys);
+    },
     // 是否需要展示子菜单
     showChildMenu(children) {
       /*
        *  @children 要查询的路由
        */
-      let hidden = children.filter(i => i.hidden);
+      let hidden = children.filter((i) => i.hidden);
       if (hidden.length === children.length) {
         return false;
       } else {
@@ -111,33 +128,21 @@ export default {
       this.selectedKeys = [this.$route.name];
       this.getDefaultOpenkeys(this.data, this.$route.name);
     },
-    // 查找初始打开的菜单
-    getDefaultOpenkeys(list,name) {
-      let arr = []
-      // 反转树
-      let findChildName = (data) => {
-        data.forEach(item => {
-          if(item.children){
-            findChildName(item.children)
-            delete item.children
-            arr.push(item)
-          }else{
-            arr.push(item)
-          }
-        });
-      }
-      findChildName(JSON.parse(JSON.stringify(list)))
-      let child = arr.find(i => {return i.name === name})
-      if(child){
-      let parId = getParent(list,child.id)
-      this.openKeys = [parId[0].name]
-      }
-    }
-  },
+    getDefaultOpenkeys(list, name) {
+          let openKeys = [];
+          list.forEach((item) => {
+            if (item.children) {
+              openKeys.push(item.name);
+              find(item.children, name);
+            }
+          });
+          return  this.openKeys =openKeys;
+        }
+    },
   created() {
     this.getDefaultkey(this.data);
   },
-  mounted() {}
+  mounted() {},
 };
 </script>
 
